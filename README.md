@@ -1,24 +1,5 @@
-# README
+# LazyInstagram
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project is intended to be the best Instagram bot on the market. It boasts some unique features such as AI image recognition, and zero-configuration photo/user scraping rules.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+It currently relies on the Instagram API, and it currently violates the Instagram API, so it will never get approved for production use. The next big milestone will be to rewrite the instagram functionality so it works with a headless browser, such as PhantomJS, instead of the API.
