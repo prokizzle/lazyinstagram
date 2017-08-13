@@ -1,0 +1,14 @@
+process_photos:
+  cron: "*/1 * * * *"
+  class: "PhotoAnalysisSchedulerWorker"
+  queue: analysis
+
+discovery:
+  cron: "*/60 * * * *" # execute at every 60 minutes
+  class: "DiscoveryWorker"
+  queue: default
+
+like_photos:
+  cron: "*/1 * * * *"
+  class: "PhotoLikerWorker"
+  queue: instagram_api

@@ -1,0 +1,4 @@
+web: bundle exec rails s
+# watcher: ./bin/webpack-watcher
+webpacker: ./bin/webpack-dev-server
+sidekiq: bundle exec rerun --background --dir config,db,lib --pattern '{**/*}' -- bundle exec sidekiq --verbose
