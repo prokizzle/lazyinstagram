@@ -37,7 +37,7 @@ module ImageAnalysis
       end
 
       def bad_image?
-        api_result[:labels].empty?
+        api_result.empty?
       end
 
       def gender

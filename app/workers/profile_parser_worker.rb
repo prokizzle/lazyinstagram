@@ -3,7 +3,7 @@ class ProfileParserWorker
 
   def perform
     extract_locations
-    extract_hashtags
+    # extract_hashtags
   end
 
   def extract_locations(next_url: nil)
