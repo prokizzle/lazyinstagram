@@ -1,9 +1,9 @@
 class PhotoAnalysisSchedulerWorker
-	include Sidekiq::Worker
+  include Sidekiq::Worker
 
-	def perform
-		if InstagramPhoto.where(liked: false, scraped: true, gender: 'female').count < 500
-			AnalyzePhotosWorker.perform_async
-		end
-	end
+  def perform
+    if InstagramPhoto.where(liked: false, scraped: true, gender: 'female').count < 500
+      InstagramPhoto.where(scraped: nil).count.times { AnalyzePhotosWorker.perform_async }
+    end
+  end
 end

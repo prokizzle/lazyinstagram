@@ -1,5 +1,5 @@
 process_photos:
-  cron: "*/1 * * * *"
+  cron: "* * * * *"
   class: "PhotoAnalysisSchedulerWorker"
   queue: analysis
 
