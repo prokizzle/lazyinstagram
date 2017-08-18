@@ -25,6 +25,7 @@ gem 'bootstrap', '~> 4.0.0.alpha6'
 gem "lograge"
 gem 'devise'
 gem 'google-cloud-vision'
+gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

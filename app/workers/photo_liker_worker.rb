@@ -1,7 +1,7 @@
 class PhotoLikerWorker
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
-  sidekiq_options queue: :instagram_api, backtrace: true, retry: false
+  sidekiq_options queue: :liker, backtrace: true, retry: false
 
   sidekiq_throttle({
                      :concurrency => { :limit => 1 },
