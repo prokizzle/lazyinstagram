@@ -3,13 +3,12 @@ require "google/cloud/vision"
 module ImageAnalysis
   module Drivers
     class GoogleVision < Base
-      attr_reader :client, :labels
+      attr_reader :labels
 
       def initialize(url:)
-        @url = url
         project_id = ENV['google_vision_product_id']
-        @client = Google::Cloud::Vision.new(project: project_id)
-        @image_labels = client.image(@image_url).labels rescue nil
+        client = Google::Cloud::Vision.new(project: project_id)
+        @labels = client.image(url).labels# rescue nil
       end
 
       def label_names

@@ -15,45 +15,63 @@ class Dashboard extends React.Component {
 	}
 
   queueCards () {
-    return _.chunk([
-      {
-        title: 'Image Rekognition Queue',
-        queue_name: 'analysis_queue'
-      },
-      {
-        title: 'Like Queue',
-        queue_name: 'like_queue'
-      },
-      {
-        title: 'Total Photos',
-        queue_name: 'photos'
-      },
-      {
-        title: 'Total Liked',
-        queue_name: 'liked'
+    var queues = _.map(this.state.queues, (value, key) => {
+      return {
+        queue_name: key,
+        value: value
       }
-    ], 3)
+    });
+    return _.chunk(queues, 3)
+  }
+
+  filters () {
+    return {most_popular_tags: function(tags) { 
+          if (_.isUndefined(tags)) { 
+            return '';
+          } else {
+            return tags.join(', ');
+          }
+        }, 
+        images: function (urls) {
+          return _.map(urls, (url, key) => {
+            return <img height='50' width='50' src={url} key={key}/>
+          })
+        }
+      }
+  }
+
+  fetchQueues () {
+    $.get('/queues', (data) => {
+        this.setState(data);
+      });
   }
 
   componentDidMount () {
+    this.fetchQueues()
     setInterval(() => {
-      $.get('/queues', (data) => {
-        this.setState(data);
-      });
-    }, 10000)
+      this.fetchQueues()
+    }, 3000)
   }
 
   card (card, i) {
+    var formatter = this.filters()[card.queue_name]
+    if (_.isUndefined(formatter)) { 
+      formatter = function (i) { return i } 
+    }
+    if (_.isUndefined(this.state.queues[card.queue_name])) { return <div/> } else {
+
     return <div className='card' key={i}>
         <div className='card-block'>
           <h4 className='card-title'>
-            {card.title}
+            {_.startCase(card.queue_name)}
           </h4>
           <p className='card-text'>
-            {this.state.queues[card.queue_name] || 0}
+            {
+              formatter(this.state.queues[card.queue_name])}
           </p>
         </div>
       </div>
+    }
   }
 
   deck (cards, i) {
@@ -74,13 +92,31 @@ class Dashboard extends React.Component {
     })
   }
 
+  randomImages() {
+    return <div className='row'>
+      {
+        _.map(this.state.queues.urls, (url, key) => {
+          return <img src={url} height='150' width='150' className='mx-2' key={key} />
+        })
+      }
+    </div>
+  }
+
   render () {
     return <div className='container'>
       <div className='row'>
-        <h1>Lazy Instagram</h1>
+        <h1>{_.startCase('lazy_instagram')}</h1>
       </div>
-      {this.cards.bind(this)()}
-	  </div>;
+      <div className='row'>
+        <div className='col-12'>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-12'>
+          {this.cards.bind(this)()}
+        </div>
+      </div>
+	  </div>
   }
 }
 

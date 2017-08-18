@@ -15,16 +15,19 @@ class AnalyzePhotosWorker
     unless photo.nil?
       client = ImageAnalysis::Client.new(url: photo.url, driver: driver)
       if client.bad_image?
-        photo.destroy!
+        puts "Bad image", photo.url
+        # photo.destroy!
       else
+        puts client.label_names.inspect, photo.url
+        photo.label_list.add(client.label_names)
         if client.labels_include?('female', 'girl')
           photo.gender = 'female'
-          photo.scraped = true
-          photo.save
-        else
-          photo.destroy
         end
+        photo.scraped = true
+        photo.save
       end
+    else
+      DiscoveryWorker.perform_async
     end
   end
 
