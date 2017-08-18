@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/mbleigh/acts-as-taggable-on.git
+  revision: 4d9a10c25e106bd2467662baea58510a17809ca2
+  specs:
+    acts-as-taggable-on (5.0.0)
+      activerecord (>= 4.2.8)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -130,7 +137,7 @@ GEM
       googleauth (~> 0.5.1)
       grpc (~> 1.0)
       rly (~> 0.2.3)
-    google-protobuf (3.3.0-universal-darwin)
+    google-protobuf (3.3.0)
     googleapis-common-protos (1.3.5)
       google-protobuf (~> 3.2)
       grpc (~> 1.0)
@@ -142,7 +149,7 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
-    grpc (1.4.5-universal-darwin)
+    grpc (1.4.5)
       google-protobuf (~> 3.1)
       googleauth (~> 0.5.1)
     hitimes (1.2.5)
@@ -155,6 +162,7 @@ GEM
     jmespath (1.3.1)
     jquery (0.0.1)
     jwt (1.5.6)
+    libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -224,6 +232,7 @@ GEM
     redis (3.3.3)
     redis-namespace (1.5.3)
       redis (~> 3.0, >= 3.0.4)
+    ref (2.0.0)
     rerun (0.11.0)
       listen (~> 3.0)
     responders (2.4.0)
@@ -280,6 +289,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
@@ -316,6 +328,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on!
   aws-sdk
   bootstrap (~> 4.0.0.alpha6)
   byebug
@@ -344,6 +357,7 @@ DEPENDENCIES
   sidekiq-throttled
   spring
   spring-watcher-listen (~> 2.0.0)
+  therubyracer
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)

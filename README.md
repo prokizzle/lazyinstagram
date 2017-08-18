@@ -6,7 +6,7 @@ It currently relies on the Instagram API, and it currently violates the Instagra
 
 ## For Potential Employers
 
-I'm using this as a recent example of my coding style.
+I'm using this as a recent example of my coding style. Feel free to browse through the code to get a feel for how I organize my thoughts and strategies.
 
 ### React examples
 

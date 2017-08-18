@@ -7,7 +7,7 @@ class AnalyzePhotosWorker
                      # Allow maximum 10 concurrent jobs of this class at a time.
                      :concurrency => { :limit => 5 },
                      # Allow maximum 1K jobs being processed within one hour window.
-                     :threshold => { :limit => 5_000, :period => 1.day }
+                     :threshold => { :limit => 600, :period => 1.minute }
   })
 
   def perform
@@ -15,16 +15,19 @@ class AnalyzePhotosWorker
     unless photo.nil?
       client = ImageAnalysis::Client.new(url: photo.url, driver: driver)
       if client.bad_image?
-        photo.destroy!
+        puts "Bad image", photo.url
+        # photo.destroy!
       else
+        puts client.label_names.inspect, photo.url
+        photo.label_list.add(client.label_names)
         if client.labels_include?('female', 'girl')
           photo.gender = 'female'
-          photo.scraped = true
-          photo.save
-        else
-          photo.destroy
         end
+        photo.scraped = true
+        photo.save
       end
+    else
+      DiscoveryWorker.perform_async
     end
   end
 

@@ -1,5 +1,7 @@
 ---
 :concurrency: 5
+:verbose: false
+:logfile: ./log/sidekiq.log
 :pidfile: tmp/pids/sidekiq.pid
 staging:
   :concurrency: 10
@@ -10,3 +12,4 @@ production:
   - creations
   - analysis
   - instagram_api
+  - scrape_photos
