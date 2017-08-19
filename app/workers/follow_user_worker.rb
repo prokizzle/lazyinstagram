@@ -2,6 +2,8 @@ class FollowUserWorker
     include Sidekiq::Worker
     include Sidekiq::Throttled::Worker
 
+    sidekiq_options queue: :follows
+
     sidekiq_throttle({
         :concurrency => { :limit => 1 },
         :threshold => { :limit => 4, :period => 15.minutes }
