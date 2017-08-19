@@ -12,7 +12,7 @@ class ScrapePhotosByLocationWorker
   })
 
   def perform(latitude, longitude, newest_timestamp, oldest_timestamp = Time.now.to_i)
-    return if InstagramPhoto.where(scraped: nil).size > 600
+    return if analysis_queue_full 
     client = Instagram::LocationSearch.new(latitude: latitude, longitude: longitude)
     results = client.fetch
     results['data'].each do |result|
@@ -26,9 +26,13 @@ class ScrapePhotosByLocationWorker
       # create_location(result)
     end
 
-    if client.oldest_timestamp(results) > 1.hours.ago.to_i
+    if (client.oldest_timestamp(results) > 1.hours.ago.to_i) && !analysis_queue_full
       ScrapePhotosWorker.perform_async(latitude, longitude, client.oldest_timestamp(results))
     end
+  end
+
+  def analysis_queue_full
+      InstagramPhoto.where(scraped: nil).size > 600
   end
 
   def create_location(result)
