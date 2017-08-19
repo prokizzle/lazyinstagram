@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170813202158) do
+ActiveRecord::Schema.define(version: 20170819224935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(version: 20170813202158) do
     t.string "search_term"
     t.integer "radius"
     t.datetime "last_query"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.string "user_id"
+    t.datetime "followed_at"
+    t.integer "follows", default: 0
+    t.boolean "followed_back", default: false
+    t.boolean "following", default: false
   end
 
   create_table "hashtags", force: :cascade do |t|
