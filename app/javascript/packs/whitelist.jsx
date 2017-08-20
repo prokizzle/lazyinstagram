@@ -39,3 +39,11 @@ class Whitelist extends React.Component {
         </div>
     }
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  ReactDOM.render(
+    <Whitelist />,
+    document.querySelector('#whitelist').appendChild(document.createElement('div')),
+  )
+})
