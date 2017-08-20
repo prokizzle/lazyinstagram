@@ -29,6 +29,11 @@ class Whitelist extends React.Component {
         })
     }
 
+    handleAddToWhitelist (e) {
+        e.preventDefault()
+        console.log(e.target.dataset.userId)
+    }
+
     whitelistableUsers() {
         return _.filter(this.state.followedUsers, (user) => {
             return !this.state.whitelistedUsers.includes(user.id)
