@@ -20,6 +20,7 @@ gem 'rest-client'
 gem 'rerun'
 gem 'celluloid'
 gem 'sidekiq-throttled'
+gem 'sidekiq-unique-jobs'
 gem 'jquery-rails'
 gem "lograge"
 gem 'devise'
