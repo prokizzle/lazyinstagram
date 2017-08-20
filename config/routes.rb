@@ -3,6 +3,7 @@
   require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
+  resources :whitelists
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   Sidekiq::Throttled::Web.enhance_queues_tab!
