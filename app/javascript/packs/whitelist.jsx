@@ -37,3 +37,5 @@ class Whitelist extends React.Component {
 
             {this.userList.bind(this)()}
         </div>
+    }
+}
