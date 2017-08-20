@@ -29,7 +29,9 @@ class Dashboard extends React.Component {
           if (_.isUndefined(tags)) { 
             return '';
           } else {
-            return tags.join(', ');
+            return _.map(tags, (tag) => {
+                return <span className='badge badge-default'>{tag}</span>
+            });
           }
         }, 
         images: function (urls) {
