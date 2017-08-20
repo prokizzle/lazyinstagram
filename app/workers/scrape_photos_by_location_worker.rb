@@ -5,7 +5,7 @@ class ScrapePhotosByLocationWorker
     sidekiq_options queue: :scrape_photos 
 
     sidekiq_throttle({
-        :concurrency => { :limit => 5 },
+        :concurrency => { :limit => 2 },
         :threshold => { :limit => 750, :period => 15.minutes }
     })
 
