@@ -1,5 +1,6 @@
 class WhitelistsController < ApplicationController
   before_action :set_whitelist, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery :except => [:update, :delete, :create]
 
   # GET /whitelists
   # GET /whitelists.json
