@@ -32,6 +32,9 @@ class Whitelist extends React.Component {
     handleAddToWhitelist (e) {
         e.preventDefault()
         console.log(e.target.dataset.userId)
+        $.post('/whitelists', {instagram_user_id: e.target.dataset.userId}, (users) => {
+            this.setState({whitelistedUsers: users})
+        })
     }
 
     whitelistableUsers() {
