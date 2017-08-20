@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @whitelist.user_id %>
+</p>
+
+<p>
+  <strong>Instagram user:</strong>
+  <%= @whitelist.instagram_user_id %>
+</p>
+
+<%= link_to 'Edit', edit_whitelist_path(@whitelist) %> |
+<%= link_to 'Back', whitelists_path %>
