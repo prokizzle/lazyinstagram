@@ -2,7 +2,7 @@ class FollowUserWorker
     include Sidekiq::Worker
     include Sidekiq::Throttled::Worker
 
-    sidekiq_options queue: :follows
+    sidekiq_options queue: :follows, unique: :until_executed
 
     sidekiq_throttle({
         :concurrency => { :limit => 1 },
