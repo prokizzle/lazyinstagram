@@ -15,6 +15,15 @@ module Instagram
             endpoint = "https://api.instagram.com/v1/users/self/?#{auth}"
             @profile =  parse_results(RestClient.get(endpoint))
         end
+
+        def following
+            endpoint = "https://api.instagram.com/v1/users/self/follows?#{auth}"
+            parse_results(RestClient.get(endpoint))['data']
+        end
+
+        def following_ids
+            following.pluck('id')
+        end
     end
 end
             
