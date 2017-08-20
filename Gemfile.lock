@@ -113,6 +113,9 @@ GEM
     erubi (1.6.1)
     et-orbi (1.0.5)
       tzinfo
+    exception_notification (4.2.2)
+      actionmailer (>= 4.0, < 6)
+      activesupport (>= 4.0, < 6)
     execjs (2.7.0)
     faraday (0.13.0)
       multipart-post (>= 1.2, < 3)
@@ -288,6 +291,7 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
+    slack-notifier (2.3.1)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -347,6 +351,7 @@ DEPENDENCIES
   celluloid
   coffee-rails (~> 4.2)
   devise
+  exception_notification
   figaro
   foreman
   geocoder
@@ -367,6 +372,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-cron (~> 0.4.0)
   sidekiq-throttled
+  slack-notifier
   spring
   spring-watcher-listen (~> 2.0.0)
   therubyracer
