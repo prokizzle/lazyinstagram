@@ -24,17 +24,8 @@ class WhitelistsController < ApplicationController
   # POST /whitelists
   # POST /whitelists.json
   def create
-    @whitelist = Whitelist.new(whitelist_params)
-
-    respond_to do |format|
-      if @whitelist.save
-        format.html { redirect_to @whitelist, notice: 'Whitelist was successfully created.' }
-        format.json { render :show, status: :created, location: @whitelist }
-      else
-        format.html { render :new }
-        format.json { render json: @whitelist.errors, status: :unprocessable_entity }
-      end
-    end
+      Whitelist.find_or_create_by(user_id: 1, instagram_user_id: params[:instagram_user_id])
+      render json: Whitelist.all
   end
 
   # PATCH/PUT /whitelists/1
