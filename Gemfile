@@ -28,6 +28,8 @@ gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on'
 
 gem 'exception_notification'
 gem 'slack-notifier'
+
+gem 'rspec-rails'
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
