@@ -20,7 +20,7 @@ gem 'rest-client'
 gem 'rerun'
 gem 'celluloid'
 gem 'sidekiq-throttled'
-gem 'jquery'
+gem 'jquery-rails'
 gem "lograge"
 gem 'devise'
 gem 'google-cloud-vision'
