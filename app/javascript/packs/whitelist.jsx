@@ -34,6 +34,7 @@ class Whitelist extends React.Component {
         console.log(e.target.dataset.userId)
         $.post('/whitelists', {instagram_user_id: e.target.dataset.userId}, (users) => {
             this.setState({whitelistedUsers: users})
+            
         })
     }
 
@@ -45,7 +46,7 @@ class Whitelist extends React.Component {
 
     userList () {
 
-        return _.map(this.state.followedUsers, (user) => {
+        return _.map(this.whitelistableUsers(), (user) => {
             return <div className='card'>
                 <div className='row'>
                     <span className='col-4'><img src={user.profile_picture}/></span>
