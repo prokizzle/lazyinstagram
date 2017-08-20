@@ -4,11 +4,16 @@ process_photos:
   queue: analysis
 
 discovery:
-  cron: "*/60 * * * *" # execute at every 60 minutes
+  cron: "*/5 * * * *" # execute at every 60 minutes
   class: "DiscoveryWorker"
-  queue: default
+  queue: discovery
 
 like_photos:
   cron: "*/1 * * * *"
   class: "PhotoLikerWorker"
   queue: instagram_api
+
+follow_users:
+    cron: "*/60 * * * *"
+    class: "ScheduleFollowsWorker"
+    queue: follows
