@@ -1,4 +1,5 @@
 require "sidekiq/throttled"
+require 'sidekiq-cron'
 Sidekiq::Throttled.setup! 
 
 schedule_file = "config/schedule.yml"
