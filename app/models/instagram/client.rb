@@ -18,12 +18,16 @@ module Instagram
       "jQuery18304327776299678414_1493603003057&_=1493603007676"
     end
 
+    def auth
+        "access_token=#{access_token}&callback=#{callback}"
+    end
+
     def oldest_timestamp(results)
       results['data'].last['created_time'].to_i
     end
 
     def user_has_liked(photo_id)
-      endpoint = "https://api.instagram.com/v1/media/#{photo_id}?access_token=#{access_token}&callback=#{callback}"
+      endpoint = "https://api.instagram.com/v1/media/#{photo_id}?#{auth}"
       data = RestClient.get(endpoint)
       return true if parse_results(data)['meta']['error_type'] == 'APINotFoundError'
       return parse_results(data)['data']['user_has_liked']
