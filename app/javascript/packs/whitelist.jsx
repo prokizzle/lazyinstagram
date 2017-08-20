@@ -39,8 +39,9 @@ class Whitelist extends React.Component {
     }
 
     whitelistableUsers() {
+        var user_ids = _.map(this.state.whitelistedUsers, (user) => { return user.instagram_user_id })
         return _.filter(this.state.followedUsers, (user) => {
-            return !this.state.whitelistedUsers.includes(user.id)
+            return !user_ids.includes(user.instagram_user_id)
         })
     }
 
