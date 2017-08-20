@@ -17,7 +17,7 @@ class Whitelist extends React.Component {
     }
 
     fetchFollowedUsers () {
-        $.get('/followed-users', (users) => {
+        $.get('/follows', (users) => {
             this.setState(followedUsers: users)
         })
     }

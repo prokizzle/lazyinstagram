@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/queues' => 'queues#index'
   root to: "discovery#index"
 
+  resources :follows, only: [:index]
+
   get '/discovery-settings' => 'discovery#index'
   post '/discovery-settings' => 'discovery#create'
 end
