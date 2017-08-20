@@ -18,7 +18,7 @@ task :deploy => :environment do
     }).deployments[0].status
 
     while status != 'successful'
-        puts status
+        sleep 5
         status = client.describe_deployments({
             deployment_ids: [deployment_id],
         }).deployments[0].status
