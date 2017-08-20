@@ -47,7 +47,7 @@ class Whitelist extends React.Component {
                 <div className='row'>
                     <span className='col-4'><img src={user.profile_picture}/></span>
                     <span className='col-4'>{user.username}</span>
-                    <span className='col-4'><button onClick={handleAddToWhitelist} data-user-id={user.id}>Whitelist</button></span>
+                    <span className='col-4'><button onClick={this.handleAddToWhitelist.bind(this)} data-user-id={user.id}>Whitelist</button></span>
                 </div>
             </div>
         })
