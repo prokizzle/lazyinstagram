@@ -1,7 +1,6 @@
 ---
 :concurrency: 5
 :verbose: false
-:logfile: ./log/sidekiq.log
 :pidfile: tmp/pids/sidekiq.pid
 staging:
   :concurrency: 10
