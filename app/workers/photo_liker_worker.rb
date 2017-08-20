@@ -5,7 +5,7 @@ class PhotoLikerWorker
 
   sidekiq_throttle({
                      :concurrency => { :limit => 1 },
-                     :threshold => { :limit => 3, :period => 5.minutes }
+                     :threshold => { :limit => 10, :period => 5.minutes }
   })
 
   def perform
