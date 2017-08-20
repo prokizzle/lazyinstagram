@@ -10,7 +10,7 @@ class AnalyzePhotosWorker
         })
     else
         sidekiq_throttle({
-            :concurrency => { :limit => 10 },
+            :concurrency => { :limit => 5 },
             :threshold => { :limit => 600, :period => 1.second }
         })
     end
