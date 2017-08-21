@@ -9,12 +9,21 @@ class Whitelist extends React.Component {
         super(props)
         this.state = {
             followedUsers: [],
-            whitelistedUsers: []
+            whitelistedUsers: [],
+            followers: []
         }
     }
 
     componentDidMount () {
         this.fetchFollowedUsers()
+        this.fetchWhitelistedUsers()
+        this.fetchFollowers()
+    }
+
+    fetchFollowers() {
+        $.get('/followers?ids=true', (users) => {
+            this.setState({followers: users})
+        })
     }
 
     fetchFollowedUsers () {
@@ -24,24 +33,30 @@ class Whitelist extends React.Component {
     }
 
     fetchWhitelistedUsers () {
-        $.get('/whitelists', (users) => {
+        $.get('/whitelists.json', (users) => {
             this.setState({whitelistedUsers: users})
         })
     }
 
     handleAddToWhitelist (e) {
         e.preventDefault()
-        console.log(e.target.dataset.userId)
         $.post('/whitelists', {instagram_user_id: e.target.dataset.userId}, (users) => {
             this.setState({whitelistedUsers: users})
             
         })
     }
 
+    followsMeStatus (user_id) {
+        var status = this.state.followers.includes(user_id)
+        return <span>
+            { status ? 'Follows you' : "Doesn't follow you" }
+        </span>
+    }
+
     whitelistableUsers() {
         var user_ids = _.map(this.state.whitelistedUsers, (user) => { return user.instagram_user_id })
         return _.filter(this.state.followedUsers, (user) => {
-            return !user_ids.includes(user.instagram_user_id)
+            return !user_ids.includes(user.id.toString())
         })
     }
 
@@ -52,7 +67,12 @@ class Whitelist extends React.Component {
                 <div className='row'>
                     <span className='col-4'><img src={user.profile_picture}/></span>
                     <span className='col-4'>{user.username}</span>
-                    <span className='col-4'><button onClick={this.handleAddToWhitelist.bind(this)} data-user-id={user.id}>Whitelist</button></span>
+                    {this.followsMeStatus.bind(this)(user.id)}
+                    <span className='col-4'>
+                        <button className='btn btn-default' onClick={this.handleAddToWhitelist.bind(this)} data-user-id={user.id}>
+                            Whitelist
+                        </button>
+                    </span>
                 </div>
             </div>
         })

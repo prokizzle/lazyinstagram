@@ -16,8 +16,8 @@ module Instagram
             @profile =  parse_results(RestClient.get(endpoint))
         end
 
-        def following
-            endpoint = "https://api.instagram.com/v1/users/self/follows?#{auth}"
+        def relationships(type)
+            endpoint = "https://api.instagram.com/v1/users/self/#{type}?#{auth}"
             results = parse_results(RestClient.get(endpoint))
 
             users = results['data']
@@ -28,8 +28,20 @@ module Instagram
             users
         end
 
+        def following
+            relationships('follows')
+        end
+
         def following_ids
             following.pluck('id')
+        end
+
+        def followers
+            relationships('followed-by')
+        end
+
+        def follower_ids
+            followers.pluck('id')
         end
     end
 end
