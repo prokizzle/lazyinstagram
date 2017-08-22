@@ -4,11 +4,11 @@ class CreatePhotoWorker
 
     def perform(url, photo_id, user_id, tags)
         photo = InstagramPhoto.find_or_create_by(
-            url: result['images']['standard_resolution']['url'],
-            photo_id: result['id'],
-            user_id: result['user']['id']
+            url: url,
+            photo_id: photo_id,
+            user_id: user_id
         )
-        photo.hashtag_list.add(result['tags'])
+        photo.hashtag_list.add(tags)
         photo.save
     end
 end
