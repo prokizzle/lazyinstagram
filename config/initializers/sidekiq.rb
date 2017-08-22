@@ -9,9 +9,9 @@ if File.exists?(schedule_file) && Sidekiq.server?
 end
 
 Sidekiq.configure_server do |config|
-      config.redis = { url: 'redis://redis-10856.c11.us-east-1-2.ec2.cloud.redislabs.com:10856/0' }
+      config.redis = { url: "redis://#{ENV[:REDIS_SERVER}:6379/0", password: ENV['REDIS_PASSWORD'] }
 end
 
 Sidekiq.configure_client do |config|
-      config.redis = { url: 'redis://redis-10856.c11.us-east-1-2.ec2.cloud.redislabs.com:10856/0' }
+      config.redis = { url: "redis://#{ENV[:REDIS_SERVER}:6379/0", password: ENV['REDIS_PASSWORD'] }
 end
