@@ -17,7 +17,7 @@ class ScrapePhotosByLocationWorker
             url = result['images']['standard_resolution']['url']
             photo_id = result['id']
             user_id = result['user']['id']
-            tags = result['tags'])
+            tags = result['tags']
             CreatePhotoWorker.perform_async(url, photo_id, user_id, tags)
         end
 
