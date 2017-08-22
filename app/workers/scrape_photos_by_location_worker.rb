@@ -2,7 +2,7 @@ class ScrapePhotosByLocationWorker
     include Sidekiq::Worker
     include Sidekiq::Throttled::Worker
 
-    sidekiq_options queue: :scrape_photos 
+    sidekiq_options queue: :scrape_photos, unique: :until_executing
 
     sidekiq_throttle({
         :concurrency => { :limit => 2 },
@@ -14,14 +14,11 @@ class ScrapePhotosByLocationWorker
         client = Instagram::LocationSearch.new(latitude: latitude, longitude: longitude)
         results = client.fetch
         results['data'].each do |result|
-            photo = InstagramPhoto.find_or_create_by(
-                url: result['images']['standard_resolution']['url'],
-                photo_id: result['id'],
-                user_id: result['user']['id']
-            )
-            photo.hashtag_list.add(result['tags'])
-            photo.save
-            # create_location(result)
+            url = result['images']['standard_resolution']['url']
+            photo_id = result['id']
+            user_id = result['user']['id']
+            tags = result['tags'])
+            CreatePhotoWorker.perform_async(url, photo_id, user_id, tags)
         end
 
         if (client.oldest_timestamp(results) > 1.hours.ago.to_i) && !analysis_queue_full
