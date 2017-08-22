@@ -11,4 +11,4 @@ class CreatePhotoWorker
         photo.hashtag_list.add(result['tags'])
         photo.save
     end
-
+end
