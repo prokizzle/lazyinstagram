@@ -2,12 +2,12 @@ class FollowUserWorker
     include Sidekiq::Worker
     include Sidekiq::Throttled::Worker
 
-    sidekiq_options queue: :follows, unique: :until_executed
-
     sidekiq_throttle({
         :concurrency => { :limit => 1 },
         :threshold => { :limit => 4, :period => 15.minutes }
     })
+
+    sidekiq_options queue: :follows, unique: :until_executed
 
     def perform(user_id)
         return if Instagram::Account.new.total_following > 500
