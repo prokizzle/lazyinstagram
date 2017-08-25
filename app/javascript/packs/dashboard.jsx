@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
             return '';
           } else {
             return _.map(tags, (tag) => {
-                return <span className='badge badge-default'>{tag}</span>
+                return <span className='mx-2'>{tag}</span>
             });
           }
         }, 
