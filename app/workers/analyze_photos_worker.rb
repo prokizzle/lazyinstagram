@@ -23,7 +23,6 @@ class AnalyzePhotosWorker
                 puts "Bad image", photo.url
                 # photo.destroy!
             else
-                puts client.label_names.inspect, photo.url
                 photo.label_list.add(client.label_names)
                 if client.labels_include?('female', 'girl')
                     photo.gender = 'female'
@@ -31,8 +30,6 @@ class AnalyzePhotosWorker
                 photo.scraped = true
                 photo.save
             end
-        else
-            DiscoveryWorker.perform_async
         end
     end
 
