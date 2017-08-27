@@ -89,42 +89,46 @@ class Dashboard extends React.Component {
   }
 
   cards () {
-    return this.queueCards().map((deck, i) => {
-      return this.deck(deck, i)
-    })
+      if (_.isEmpty(this.queueCards())) {
+          return this.queueCards().map((deck, i) => {
+              return this.deck(deck, i)
+          })
+      } else {
+          return <span>Loading...</span>
+      }
   }
 
   randomImages() {
-    return <div className='row'>
-      {
-        _.map(this.state.queues.urls, (url, key) => {
-          return <img src={url} height='150' width='150' className='mx-2' key={key} />
-        })
-      }
-    </div>
+      return <div className='row'>
+          {
+              _.map(this.state.queues.urls, (url, key) => {
+                  return <img src={url} height='150' width='150' className='mx-2' key={key} />
+              })
+          }
+      </div>
   }
 
   render () {
-    return <div className='container'>
-      <div className='row'>
-        <h1>{_.startCase('lazy_instagram')}</h1>
+      return <div className='container'>
+          <div className='row'>
+              <h1>{_.startCase('lazy_instagram')}</h1>
+          </div>
+          <div className='row'>
+              <div className='col-12'>
+              </div>
+          </div>
+          <div className='row'>
+              <div className='col-12'>
+                  {this.cards.bind(this)()}
+              </div>
+          </div>
       </div>
-      <div className='row'>
-        <div className='col-12'>
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-12'>
-          {this.cards.bind(this)()}
-        </div>
-      </div>
-	  </div>
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Dashboard />,
-    document.querySelector('#dashboard').appendChild(document.createElement('div')),
-  )
+    ReactDOM.render(
+        <Dashboard />,
+        document.querySelector('#dashboard').appendChild(document.createElement('div')),
+    )
 })
