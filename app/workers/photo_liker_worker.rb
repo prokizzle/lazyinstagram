@@ -5,11 +5,11 @@ class PhotoLikerWorker
 
   sidekiq_throttle({
                      :concurrency => { :limit => 1 },
-                     :threshold => { :limit => 10, :period => 5.minutes }
+                     :threshold => { :limit => 10, :period => 3.minutes }
   })
 
   def perform
-    photo = InstagramPhoto.find_by(liked: false, scraped: true, gender: 'female')
+    photo = InstagramPhoto.females.where(scraped: true, liked: false).order(id: :desc).first
     return if photo.nil?
     if photo.photo_id.nil?
       photo.destroy

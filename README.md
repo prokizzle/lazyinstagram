@@ -14,7 +14,10 @@ I'm using this as a recent example of my coding style. Feel free to browse throu
 
 ### API Wrapper Examples
 
-`app/models/image_analysis/drivers`
+```
+app/models/image_analysis/drivers
+app/models/instagram
+````
 
 ### Background Job Examples
 
