@@ -10,7 +10,7 @@ array = [
         "queue": "analysis"
     },
     {
-    "name": "discovery",
+        "name": "discovery",
         "cron": "*/5 * * * *",
         "class": "DiscoveryWorker",
         "queue": "discovery"
