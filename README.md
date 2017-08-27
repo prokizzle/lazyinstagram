@@ -8,6 +8,13 @@ It currently relies on the Instagram API, and it currently violates the Instagra
 
 I'm using this as a recent example of my coding style. Feel free to browse through the code to get a feel for how I organize my thoughts and strategies.
 
+### Continuous Deployment Strategies
+
+This project uses CodeShip for Continuous Deployment and deploys to AWS OpsWorks.
+Cookbooks can be found here: https://github.com/prokizzle/cookbooks
+CodeShip simply executes `bundle exec rake deploy` which can be viewed at `lib/tasks/deploy.rake`.
+
+
 ### React examples
 
 `app/javascript/packs`
