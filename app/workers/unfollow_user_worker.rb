@@ -7,7 +7,10 @@ class UnfollowUserWorker
         :threshold => { :limit => 5, :period => 12.minutes }
     })
 
-    def perfrom(user_id, instagram_user_id)
-        Instagram::Unfollower.new(user_id: user_id).call(instagram_user_id)
+    def perform
+        following_ids = Instagram::Account.new.following_ids
+        whitelisted_ids = Whitelist.where(instagram_user_id: following_ids).pluck(:instagram_user_id)
+        target = Follow.where.not(user_id: whitelisted_ids).where(followed_at: 1.year.ago..5.days.ago).order(followed_at: :desc).first
+        Instagram::UserUnfollower.new(user_id: target.user_id).unfollow!
     end
 end
