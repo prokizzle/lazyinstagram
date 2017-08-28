@@ -10,6 +10,12 @@ array = [
         "queue": "analysis"
     },
     {
+        "name":"unfollow_users",
+        "cron":"* * * * *",
+        "class":"UserUnfollowerWorker",
+        "queue":"follows"
+    },
+    {
         "name": "discovery",
         "cron": "*/5 * * * *",
         "class": "DiscoveryWorker",
