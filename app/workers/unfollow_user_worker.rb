@@ -14,3 +14,5 @@ class UnfollowUserWorker
         Instagram::UserUnfollower.new(user_id: target.user_id).unfollow!
     end
 end
+
+UserUnfollowerWorker = UnfollowUserWorker
