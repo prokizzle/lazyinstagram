@@ -7,6 +7,8 @@ class UnfollowUserWorker
         :threshold => { :limit => 5, :period => 12.minutes }
     })
 
+    sidekiq_options({ backtrace: true })
+
     def perform
         following_ids = Instagram::Account.new.following_ids
         whitelisted_ids = Whitelist.where(instagram_user_id: following_ids).pluck(:instagram_user_id)
