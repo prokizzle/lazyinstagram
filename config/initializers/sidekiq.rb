@@ -12,7 +12,7 @@ array = [
     {
         "name":"unfollow_users",
         "cron":"* * * * *",
-        "class":"UserUnfollowerWorker",
+        "class":"UnfollowUserWorker",
         "queue":"follows"
     },
     {
