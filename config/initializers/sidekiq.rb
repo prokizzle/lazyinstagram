@@ -37,11 +37,13 @@ array = [
 
 Sidekiq::Cron::Job.load_from_array array
 
+redis_conn = proc {
+      Redis.new(host: ENV['REDIS_SERVER'], port: 6379, db: 0)
+}
+Sidekiq.configure_client do |config|
+      config.redis = ConnectionPool.new(size: 5, &redis_conn)
+end
 Sidekiq.configure_server do |config|
-    config.redis = { url: "redis://#{ENV['REDIS_SERVER']}:6379/0" }
-    # config.redis = { url: "redis://#{ENV['REDIS_SERVER']}:6379/0", password: ENV['REDIS_PASSWORD'] }
+      config.redis = ConnectionPool.new(size: 25, &redis_conn)
 end
 
-Sidekiq.configure_client do |config|
-    config.redis = { url: "redis://#{ENV['REDIS_SERVER']}:6379/0" }
-end
