@@ -1,7 +1,9 @@
 default: &default
   adapter: postgresql
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 30 } %>
   timeout: 5000
+  checkout_timeout: 20
+  reaping_frequency: 30
 
 test:
   <<: *default
