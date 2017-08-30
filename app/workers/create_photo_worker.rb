@@ -1,6 +1,6 @@
 class CreatePhotoWorker
     include Sidekiq::Worker
-    sidekiq_options queue: :creations
+    sidekiq_options({queue: :creations, concurrency: 6})
 
     def perform(url, photo_id, user_id, tags)
         photo = InstagramPhoto.find_or_create_by(
