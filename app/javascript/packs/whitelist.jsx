@@ -60,6 +60,15 @@ class Whitelist extends React.Component {
         })
     }
 
+    controlToggles () {
+        return <div>
+            <div className='form-group'>
+                <input id='followsYou' type='checkbox' value={this.state.filters.followsYou} onChange={this.handleChangeFilter} data-filter='followsYou'/>
+                <label htmlFor='followsYou' class='form-control'>Follows You</label>
+            </div>
+        </div>
+}
+
     userList () {
 
         return _.map(this.whitelistableUsers(), (user) => {
@@ -81,7 +90,7 @@ class Whitelist extends React.Component {
     render () {
         return <div>
             <h1>Whitelist users</h1>
-
+            {this.controlToggles.bind(this)()}
             {this.userList.bind(this)()}
         </div>
     }
