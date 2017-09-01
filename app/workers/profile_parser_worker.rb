@@ -1,43 +1,38 @@
 class ProfileParserWorker
-  include Sidekiq::Worker
+    include Sidekiq::Worker
 
-  def perform
-    extract_locations
-    # extract_hashtags
-  end
-
-  def extract_locations(next_url: nil)
-    User.find_each do |user|
-      locations = profile.locations(next_url: next_url)[:locations]
-      _next_url = profile.locations(next_url: next_url)[:next_url]
-      puts _next_url
-      locations.each do |location|
-        loc = Location.find_or_create_by(
-          latitude: location['latitude'],
-          longitude: location['longitude'],
-          user_id: user.id
-        )
-        loc.name = location['name']
-        loc.instagram_id = location['id']
-        loc.save
-      end
-      extract_locations(next_url: _next_url) if _next_url != next_url
+    def perform
+        media = Instagram::Account.new.media
+        extract_locations(media)
+        extract_hashtags(media)
     end
-  end
 
-  def extract_hashtags
-    profile.hashtags.each do |hashtags|
-      hashtags.each do |tag|
-        hashtag = Hashtag.find_or_create_by(name: tag, user_id: 1)
-        UserHashtag.find_or_create_by(
-          hashtag_id: hashtag.id,
-          user_id: 1,
-        )
-      end
+    def extract_locations(media)
+        User.find_each do |user|
+            locations = media.map{|m| m['location']}.reject(&:nil?)
+            locations.each do |location|
+                loc = Location.find_or_create_by(
+                    latitude: location['latitude'],
+                    longitude: location['longitude'],
+                    user_id: user.id
+                )
+                loc.name = location['name']
+                loc.instagram_id = location['id']
+                loc.save
+            end
+        end
     end
-  end
 
-  def profile
-    Instagram::UserProfile.new
-  end
+    def extract_hashtags(media)
+        User.find_each do |user|
+            hashtags = media.map{|m| m['tags']}.reject(&:nil?).flatten.uniq
+            hashtags.each do |tag|
+                hashtag = Hashtag.find_or_create_by(name: tag)
+                UserHashtag.find_or_create_by(
+                    hashtag_id: hashtag.id,
+                    user_id: user.id,
+                )
+            end
+        end
+    end
 end
