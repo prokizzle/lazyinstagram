@@ -16,6 +16,10 @@ module Instagram
             @profile =  parse_results(RestClient.get(endpoint))
         end
 
+        def media
+            relationships('media/recent')
+        end
+
         def relationships(type)
             endpoint = "https://api.instagram.com/v1/users/self/#{type}?#{auth}"
             results = parse_results(RestClient.get(endpoint))
