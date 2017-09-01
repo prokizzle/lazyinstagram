@@ -7,7 +7,7 @@ class UnfollowUserWorker
         :threshold => { :limit => 5, :period => 12.minutes }
     })
 
-    sidekiq_options({ backtrace: true })
+    sidekiq_options({ backtrace: true, unique: :until_executing })
 
     def perform
         following_ids = Instagram::Account.new.following_ids
