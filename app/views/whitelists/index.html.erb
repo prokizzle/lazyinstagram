@@ -1,6 +1,2 @@
 <div id='whitelist'></div>
-<% if Rails.env.production? %>
-    <%= javascript_pack_tag 'whitelist' %>
-<% else %>
-    <script src='http://webpack.prokes.ch/packs/whitelist.js'></script>
-<% end %>
+<%= javascript_pack_tag 'whitelist' %>
