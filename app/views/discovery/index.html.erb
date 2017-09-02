@@ -1,6 +1,2 @@
 <div id='dashboard'></div>
-<% if Rails.env.production? %>
-    <%= javascript_pack_tag 'dashboard' %>
-<% else %>
-    <script src='http://webpack.prokes.ch/packs/dashboard.js'></script>
-<% end %>
+<%= javascript_pack_tag 'dashboard' %>

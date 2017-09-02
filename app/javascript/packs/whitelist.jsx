@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import Toggle from './whitelist/toggle'
 
 
 class Whitelist extends React.Component {
@@ -10,6 +11,7 @@ class Whitelist extends React.Component {
         this.state = {
             followedUsers: [],
             whitelistedUsers: [],
+            filters: {},
             followers: []
         }
     }
@@ -28,7 +30,7 @@ class Whitelist extends React.Component {
 
     fetchFollowedUsers () {
         $.get('/follows', (users) => {
-            this.setState({followedUsers: _.reverse(users)})
+            this.setState({followedUsers: users})
         })
     }
 
@@ -46,6 +48,12 @@ class Whitelist extends React.Component {
         })
     }
 
+    handleChangeFilter (e) {
+        var filters = _.clone(this.state.filters)
+        filters[e.target.dataset.filter] = !filters[e.target.dataset.filter] 
+        this.setState({filters: filters})
+    }
+
     followsMeStatus (user_id) {
         var status = this.state.followers.includes(user_id)
         return <span>
@@ -53,21 +61,58 @@ class Whitelist extends React.Component {
         </span>
     }
 
-    whitelistableUsers() {
+    whitelistedUser(user_id) {
         var user_ids = _.map(this.state.whitelistedUsers, (user) => { return user.instagram_user_id })
-        return _.filter(this.state.followedUsers, (user) => {
-            return !user_ids.includes(user.id.toString())
-        })
+        return user_ids.includes(user_id.toString())
+    }
+
+
+    whitelistableUsers() {
+        var users = _.clone(this.state.followedUsers)
+
+        if (this.state.filters.hideWhitelistedUsers) {
+            users = _.filter(users, (user) => {
+                return !this.whitelistedUser(user.id)
+            })
+        }
+        if (this.state.filters.reverse) {
+            users = _.reverse(users)
+        }
+
+        if (this.state.filters.followsYou) {
+            users = _.filter(users, (user) => {
+                return this.state.followers.includes(user.id)
+            })
+        }
+        return users
     }
 
     controlToggles () {
         return <div>
-            <div className='form-group'>
-                <input id='followsYou' type='checkbox' value={this.state.filters.followsYou} onChange={this.handleChangeFilter} data-filter='followsYou'/>
-                <label htmlFor='followsYou' class='form-control'>Follows You</label>
-            </div>
+            <Toggle name='followsYou' 
+                value={this.state.filters.followsYou} 
+                handleChange={this.handleChangeFilter.bind(this)} />
+            <Toggle name='reverse'
+                value={this.state.filters.reverse}
+                handleChange={this.handleChangeFilter.bind(this)} />
+            <Toggle name='hideWhitelistedUsers'
+                value={this.state.filters.hideWhitelistedUsers}
+                handleChange={this.handleChangeFilter.bind(this)} />
         </div>
-}
+    }
+
+    whitelistUserButton (user_id) {
+        if (this.whitelistedUser(user_id)) {
+            return <span/>
+        } else {
+            return <button 
+                className='btn btn-default' 
+                onClick={this.handleAddToWhitelist.bind(this)} 
+                data-user-id={user_id}>
+                Whitelist
+            </button>
+        }
+    }
 
     userList () {
 
@@ -78,9 +123,7 @@ class Whitelist extends React.Component {
                     <span className='col-4'>{user.username}</span>
                     {this.followsMeStatus.bind(this)(user.id)}
                     <span className='col-4'>
-                        <button className='btn btn-default' onClick={this.handleAddToWhitelist.bind(this)} data-user-id={user.id}>
-                            Whitelist
-                        </button>
+                        {this.whitelistUserButton.bind(this)(user.id)}
                     </span>
                 </div>
             </div>
@@ -98,8 +141,8 @@ class Whitelist extends React.Component {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Whitelist />,
-    document.querySelector('#whitelist').appendChild(document.createElement('div')),
-  )
+    ReactDOM.render(
+        <Whitelist />,
+        document.querySelector('#whitelist').appendChild(document.createElement('div')),
+    )
 })
