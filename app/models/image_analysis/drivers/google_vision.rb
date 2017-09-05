@@ -13,7 +13,7 @@ module ImageAnalysis
 
             def api_labels(url)
                 @client.image(url).labels
-            rescue Google::Cloud::InvalidArgumentError, Google::Cloud::InvalidArgumentError
+            rescue Google::Cloud::InvalidArgumentError, Google::Cloud::InternalError
                 nil
             end
 
