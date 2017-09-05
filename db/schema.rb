@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905061103) do
+ActiveRecord::Schema.define(version: 20170905144244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "discovery_search_terms", force: :cascade do |t|
     t.string "search_term"
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170905061103) do
     t.boolean "scraped"
     t.string "gender"
     t.boolean "liked", default: false
+    t.index ["gender"], name: "index_instagram_photos_on_gender"
     t.index ["liked", "scraped"], name: "index_instagram_photos_on_liked_and_scraped"
     t.index ["liked"], name: "index_instagram_photos_on_liked"
     t.index ["scraped"], name: "index_instagram_photos_on_scraped"
