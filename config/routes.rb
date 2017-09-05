@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   Sidekiq::Throttled::Web.enhance_queues_tab!
   mount Sidekiq::Web => '/sidekiq'
+  mount PgHero::Engine, at: "pghero"
 
   get '/queues' => 'queues#index'
   root to: "discovery#index"

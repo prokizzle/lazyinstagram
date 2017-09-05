@@ -26,7 +26,8 @@ gem "lograge"
 gem 'devise'
 gem 'google-cloud-vision'
 gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on'
-
+gem 'pghero'
+gem 'pg_query', '>= 0.9.0'
 gem 'exception_notification'
 gem 'slack-notifier'
 
