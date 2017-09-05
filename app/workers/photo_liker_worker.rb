@@ -10,12 +10,9 @@ class PhotoLikerWorker
 
   def perform
     photo = InstagramPhoto.where(liked: false, gender: 'female').first
-    photo = InstagramPhoto.tagged_with('fitness').where(liked: false).first if photo.nil?
-    photo = InstagramPhoto.tagged_with('vacation').where(liked: false).first if photo.nil?
-    photo = InstagramPhoto.tagged_with('scottsdale').where(liked: false).first if photo.nil?
-    photo = InstagramPhoto.tagged_with('vegas').where(liked: false).first if photo.nil?
-    photo = InstagramPhoto.tagged_with('hiking').where(liked: false).first if photo.nil?
-    photo = InstagramPhoto.tagged_with('yoga').where(liked: false).first if photo.nil?
+    tags = ['fitness', 'yoga', 'vacation', 'scottsdale', 'vegas', 'female', 'girl', 'woman', 'bikini', 'yoga', 'fashionista', 'hiking']
+    photo = InstagramPhoto.tagged_with(tags, any: true).where(liked: false).first if photo.nil?
+    return if photo.nil?
 
     if photo.photo_id.nil?
       photo.destroy
