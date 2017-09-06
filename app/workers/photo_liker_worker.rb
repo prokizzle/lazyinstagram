@@ -10,7 +10,7 @@ class PhotoLikerWorker
 
   def perform
     photo = InstagramPhoto.where(liked: false, gender: 'female').first
-    tags = ['fitness', 'yoga', 'vacation', 'scottsdale', 'vegas', 'female', 'girl', 'woman', 'bikini', 'yoga', 'fashionista', 'hiking']
+    tags = ['fitness', 'yoga', 'vacation', 'scottsdale', 'arizona', 'california', 'beach', 'atx', 'female', 'girl', 'woman', 'bikini', 'yoga', 'fashionista', 'hiking']
     photo = InstagramPhoto.tagged_with(tags, any: true).where(liked: false).first if photo.nil?
     return if photo.nil?
 
