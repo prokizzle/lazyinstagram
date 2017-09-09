@@ -8,7 +8,7 @@ class CreatePhotoWorker
             photo_id: photo_id,
             user_id: user_id
         )
-        photo.hashtag_list.add(tags)
+        photo.tags += tags
         photo.save
     end
 end
