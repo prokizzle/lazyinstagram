@@ -15,7 +15,9 @@ module Instagram
 
         def following?
             response = RestClient.get(endpoint) 
-            parse_results(response)['data']['outgoing_status'] == 'follows'
+            results = parse_results(response)
+            return false if results['meta']['error_type'].present?
+            results['data']['outgoing_status'] == 'follows'
         end
 
         def follows_me?
