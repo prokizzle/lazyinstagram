@@ -38,6 +38,13 @@ module Instagram
       RestClient.post(endpoint, {})
     end
 
+    def most_recent_media_ids(user_id)
+        endpoint = "https://api.instagram.com/v1/users/#{user_id}/media/recent?#{auth}"
+        response = RestClient.get(endpoint)
+        data = parse_results(response)
+        return [] unless data['data'].present?
+        data['data'].map{|d| d['id']}
+    end
 
     def newest_timestamp(results)
       results['data'].first['created_time'].to_i
