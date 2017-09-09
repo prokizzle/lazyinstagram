@@ -46,6 +46,9 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts-as-taggable-array-on (0.4.0)
+      activerecord (>= 4)
+      activesupport (>= 4)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (8.0.0)
@@ -369,6 +372,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-array-on
   acts-as-taggable-on!
   aws-sdk
   bootstrap (~> 4.0.0.beta)

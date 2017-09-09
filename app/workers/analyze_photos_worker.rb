@@ -23,7 +23,7 @@ class AnalyzePhotosWorker
                 puts "Bad image", photo.url
                 # photo.destroy!
             else
-                photo.label_list.add(client.label_names)
+                photo.tags += client.label_names
                 if client.labels_include?('female', 'girl')
                     photo.gender = 'female'
                 end
