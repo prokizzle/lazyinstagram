@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905144244) do
+ActiveRecord::Schema.define(version: 20170909025918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170905144244) do
     t.boolean "scraped"
     t.string "gender"
     t.boolean "liked", default: false
+    t.string "tags", default: [], array: true
     t.index ["gender"], name: "index_instagram_photos_on_gender"
     t.index ["liked", "scraped"], name: "index_instagram_photos_on_liked_and_scraped"
     t.index ["liked"], name: "index_instagram_photos_on_liked"
