@@ -1,14 +1,14 @@
-class PhotoLikerWorker
+class SchedulePhotoLikesWorker
   include Sidekiq::Worker
-  include Sidekiq::Throttled::Worker
   sidekiq_options queue: :liker, backtrace: true, retry: false
 
-  sidekiq_throttle({
-                     :concurrency => { :limit => 1 },
-                     :threshold => { :limit => 3, :period => 3.minutes }
-  })
 
   def perform
+    # like_photos_by_tags
+    like_photos_from_feed
+  end
+
+  def like_photos_by_tags
     photo = InstagramPhoto.where(liked: false, gender: 'female').first
     tags = ['fitness', 'yoga', 'vacation', 'scottsdale', 'arizona', 'california', 'beach', 'atx', 'female', 'girl', 'woman', 'bikini', 'yoga', 'fashionista', 'hiking']
     photo = InstagramPhoto.tagged_with(tags, any: true).where(liked: false).first if photo.nil?
@@ -16,12 +16,29 @@ class PhotoLikerWorker
 
     if photo.photo_id.nil?
       photo.destroy
-      PhotoLikerWorker.perform_async
+      SchedulePhotoLikesWorker.perform_async
     else
-      client = Instagram::Client.new
-      client.like_media(photo.photo_id)
+      LikePhotoWorker.perform_async(photo.photo_id)
       photo.liked = client.user_has_liked(photo.photo_id)
       photo.save
     end
   end
+
+  def client
+      @client ||= Instagram::Client.new
+  end
+
+  def like_photos_from_feed
+    following_ids = Instagram::Account.new.following_ids
+    following_ids.each do |id|
+        puts id
+        photo = client.most_recent_media_ids(id).first
+        next if photo.nil?
+        LikePhotoWorker.perform_async(photo['id'])
+    end
+  end
 end
+
+
+
+PhotoLikerWorker = SchedulePhotoLikesWorker
