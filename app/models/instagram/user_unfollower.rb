@@ -4,7 +4,9 @@ module Instagram
 
         def unfollow!
             response = RestClient.post(endpoint, {action: 'unfollow'})
-            parse_results(response)['data']['outgoing_status'] == 'none'
+            results = parse_results(response)
+            return false if results['meta']['error_type'].present?
+            results['data']['outgoing_status'] == 'none'
         end
     end
 end
