@@ -11,7 +11,7 @@ array = [
     },
     {
         "name":"unfollow_users",
-        "cron":"* * * * *",
+        "cron":"*/5 * * * *",
         "class":"UnfollowUserWorker",
         "queue":"follows"
     },
