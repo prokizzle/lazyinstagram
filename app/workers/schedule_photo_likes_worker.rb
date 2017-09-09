@@ -31,10 +31,9 @@ class SchedulePhotoLikesWorker
   def like_photos_from_feed
     following_ids = Instagram::Account.new.following_ids
     following_ids.each do |id|
-        puts id
-        photo = client.most_recent_media_ids(id).first
-        next if photo.nil?
-        LikePhotoWorker.perform_async(photo['id'])
+        photo_id = client.most_recent_media_ids(id).first
+        next if photo_id.nil?
+        LikePhotoWorker.perform_async(photo_id)
     end
   end
 end
