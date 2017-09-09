@@ -12,11 +12,13 @@ class UnfollowUserWorker
     def perform
         following_ids = Instagram::Account.new.following_ids
         whitelisted_ids = Whitelist.where(instagram_user_id: following_ids).pluck(:instagram_user_id)
-        targets = Follow.where.not(user_id: whitelisted_ids).where(followed_at: 1.year.ago..5.days.ago, following: true).order(followed_at: :desc)
+        targets = Follow.where.not(user_id: whitelisted_ids).where(followed_at: 1.year.ago..3.days.ago, following: true).order(followed_at: :desc)
+        puts targets.count
         target = targets.try(:first)
         return if target.nil?
-        Instagram::UserUnfollower.new(user_id: target.user_id).unfollow!
-        target.following = false
+        client = Instagram::UserUnfollower.new(user_id: target.user_id)
+        client.unfollow!
+        target.following =  client.following?
         target.save
     end
 end
