@@ -4,7 +4,7 @@ class UnfollowUserWorker
 
     sidekiq_throttle({
         :concurrency => { :limit => 1 },
-        :threshold => { :limit => 5, :period => 12.minutes }
+        :threshold => { :limit => 3, :period => 12.minutes }
     })
 
     sidekiq_options({ backtrace: true, unique: :until_executing })

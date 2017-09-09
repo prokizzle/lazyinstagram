@@ -4,7 +4,7 @@ class FollowUserWorker
 
     sidekiq_throttle({
         :concurrency => { :limit => 1 },
-        :threshold => { :limit => 4, :period => 15.minutes }
+        :threshold => { :limit => 4, :period => 20.minutes }
     })
 
     sidekiq_options queue: :follows, unique: :until_executed
