@@ -89,7 +89,7 @@ class Dashboard extends React.Component {
   }
 
   cards () {
-      if (_.isEmpty(this.queueCards())) {
+      if (!_.isEmpty(this.queueCards())) {
           return this.queueCards().map((deck, i) => {
               return this.deck(deck, i)
           })
