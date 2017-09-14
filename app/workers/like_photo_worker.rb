@@ -11,7 +11,7 @@ class LikePhotoWorker
     def perform(photo_id)
       client = Instagram::Client.new
       client.like_media(photo_id)
-      photo = Photo.find_or_create_by(photo_id: photo_id)
+      photo = InstagramPhoto.find_or_create_by(photo_id: photo_id)
       photo.liked = client.user_has_liked(photo_id)
       photo.save
     end
