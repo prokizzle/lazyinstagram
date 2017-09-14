@@ -9,16 +9,18 @@ class SchedulePhotoLikesWorker
   end
 
   def like_photos_by_tags
-    photo = InstagramPhoto.where(liked: false, gender: 'female').first
+    photos = InstagramPhoto.where(liked: false, gender: 'female')
     tags = ['fitness', 'yoga', 'vacation', 'scottsdale', 'arizona', 'california', 'beach', 'atx', 'female', 'girl', 'woman', 'bikini', 'yoga', 'fashionista', 'hiking']
-    photo = InstagramPhoto.with_any_tags(tags).where(liked: false).first if photo.nil?
-    return if photo.nil?
+    photos = InstagramPhoto.with_any_tags(tags).where(liked: false) if photos.empty?
+    return if photos.empty?
 
+    photos.each do |photo|
     if photo.photo_id.nil?
       photo.destroy
       SchedulePhotoLikesWorker.perform_async
     else
       LikePhotoWorker.perform_async(photo.photo_id)
+    end
     end
   end
 
