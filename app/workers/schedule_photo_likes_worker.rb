@@ -4,14 +4,14 @@ class SchedulePhotoLikesWorker
 
 
   def perform
-    # like_photos_by_tags
-    like_photos_from_feed
+    like_photos_by_tags
+    # like_photos_from_feed
   end
 
   def like_photos_by_tags
     photo = InstagramPhoto.where(liked: false, gender: 'female').first
     tags = ['fitness', 'yoga', 'vacation', 'scottsdale', 'arizona', 'california', 'beach', 'atx', 'female', 'girl', 'woman', 'bikini', 'yoga', 'fashionista', 'hiking']
-    photo = InstagramPhoto.tagged_with(tags, any: true).where(liked: false).first if photo.nil?
+    photo = InstagramPhoto.with_any_tags(tags).where(liked: false).first if photo.nil?
     return if photo.nil?
 
     if photo.photo_id.nil?
@@ -19,8 +19,6 @@ class SchedulePhotoLikesWorker
       SchedulePhotoLikesWorker.perform_async
     else
       LikePhotoWorker.perform_async(photo.photo_id)
-      photo.liked = client.user_has_liked(photo.photo_id)
-      photo.save
     end
   end
 
