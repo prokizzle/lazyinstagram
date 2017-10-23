@@ -18,11 +18,12 @@ class AnalyzePhotosWorker
     def perform
         photo = InstagramPhoto.where(scraped: [false,nil]).shuffle.sample
         unless photo.nil?
-            client = ImageAnalysis::Client.new(url: photo.url, driver: driver)
-            if client.bad_image?
+            if Faraday.head(photo.url).status == 404
                 puts "Bad image", photo.url
-                # photo.destroy!
+                photo.destroy!
+                perform
             else
+                client = ImageAnalysis::Client.new(url: photo.url, driver: driver)
                 photo.tags += client.label_names
                 if client.labels_include?('female', 'girl')
                     photo.gender = 'female'
