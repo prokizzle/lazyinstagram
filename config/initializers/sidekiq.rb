@@ -24,7 +24,7 @@ array = [
     {
         "name": "like_photos",
         "cron": "*/1 * * * *",
-        "class": "PhotoLikerWorker",
+        "class": "SchedulePhotoLikesWorker",
         "queue": "instagram_api"
     },
     {
