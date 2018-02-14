@@ -217,7 +217,7 @@ GEM
       activerecord
     popper_js (1.11.1)
     public_suffix (2.0.5)
-    puma (3.10.0)
+    puma (3.11.2)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -394,7 +394,7 @@ DEPENDENCIES
   pg
   pg_query (>= 0.9.0)
   pghero
-  puma (~> 3.7)
+  puma (~> 3.11)
   rails (~> 5.1.2)
   rails-assets-tether (>= 1.3.3)!
   rerun
