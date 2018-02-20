@@ -12,7 +12,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'health_check'
 gem 'sidekiq'
-gem "sidekiq-cron", "~> 0.4.0"
+gem "sidekiq-cron", "~> 0.6.3"
 gem 'figaro'
 gem 'aws-sdk'
 gem 'geocoder'
