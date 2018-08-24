@@ -1,6 +1,8 @@
 # LazyInstagram
 
-This project is intended to be the best Instagram bot on the market. It boasts some unique features such as AI image recognition, and zero-configuration photo/user scraping rules.
+This project was intended to be the best Instagram bot on the market. It boasts some unique features such as AI image recognition, and zero-configuration photo/user scraping rules.
+
+However, Facebook and Instagram seem to be aggressively fighting off automation bots, and the sustainability of this project doesn't seem feasible.
 
 It currently relies on the Instagram API, and it currently violates the Instagram API, so it will never get approved for production use. The next big milestone will be to rewrite the instagram functionality so it works with a headless browser, such as PhantomJS, instead of the API.
 
