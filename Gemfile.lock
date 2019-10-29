@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/mbleigh/acts-as-taggable-on.git
-  revision: 4d9a10c25e106bd2467662baea58510a17809ca2
+  revision: 6b38c652e4bc1f2e53df811bd6e427cd6e8b5bf9
   specs:
-    acts-as-taggable-on (5.0.0)
-      activerecord (>= 4.2.8)
+    acts-as-taggable-on (6.5.0)
+      activerecord (>= 5.0, < 6.1)
 
 GEM
   remote: https://rubygems.org/
@@ -207,7 +207,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_mime (0.1.4)
     mini_portile2 (2.4.0)
-    minitest (5.11.3)
+    minitest (5.12.2)
     multi_json (1.13.1)
     multipart-post (2.0.0)
     netrc (0.11.0)
